@@ -1,2 +1,29 @@
-package com.inn.cafe.RestImplementation;public class userRestImple {
+package com.inn.cafe.RestImplementation;
+
+import com.inn.cafe.Constants.CafeConstants;
+import com.inn.cafe.REST.UserRest;
+import com.inn.cafe.service.UserService;
+import com.inn.cafe.utils.CafeUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
+
+@RestController
+public class userRestImple implements UserRest {
+
+    @Autowired
+    UserService userService;
+    @Override
+    public ResponseEntity<String> signup(Map<String, String> requestMap) {
+        try{
+            return userService.signUp(requestMap);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
